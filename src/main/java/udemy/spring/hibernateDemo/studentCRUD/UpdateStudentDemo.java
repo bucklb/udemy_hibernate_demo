@@ -1,4 +1,4 @@
-package udemy.spring.hibernateDemo;
+package udemy.spring.hibernateDemo.studentCRUD;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

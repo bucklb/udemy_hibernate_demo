@@ -14,7 +14,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        System.out.println( "Hello World!  Doing instructor" );
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory=new Configuration()
@@ -27,13 +27,11 @@ public class App
 
         // Try and interact with the table
         try {
-            // the student to create/write
-            String sDoB = "11/11/2011";
-            Date dDoB = DateUtils.parseDate(sDoB);
-            Student theStudent = new Student("quick", "quiz", dDoB, "q@kew.com");
+
+
 
             session.beginTransaction();
-            session.save(theStudent);
+//            session.save(theInstructor);
             session.getTransaction().commit();
 
             System.out.println("saved?");

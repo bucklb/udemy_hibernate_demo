@@ -1,21 +1,20 @@
-package udemy.spring.hibernateDemo;
+package udemy.spring.hibernateDemo.studentCRUD;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import udemy.spring.hibernateDemo.entity.Student;
 
-import java.util.Date;
-
 /**
  * Hello world!
  *
  */
-public class WriteStudentDemo
+public class ReadStudentDemo
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        System.out.println( "Hello World! Reading" );
+        int studentId=7;
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory=new Configuration()
@@ -23,27 +22,25 @@ public class WriteStudentDemo
                                 .addAnnotatedClass(Student.class)
                                 .buildSessionFactory();
 
+        // Student object
+        Student theStudent;
+
         // Get a session from factory
         Session session=factory.openSession();
 
-        // Try and interact with the table
+        // Try and interact with the table.  Get the student by id
         try {
-            // the student to create/write
-            String sDoB = "11/11/2011";
-            Date dDoB = DateUtils.parseDate(sDoB);
-            Student theStudent = new Student("quick", "quiz", dDoB, "q@kew.com");
-
-            // the writing
             session.beginTransaction();
-            session.save(theStudent);
+            theStudent=session.get(Student.class,studentId);
             session.getTransaction().commit();
-
-            System.out.println("saved?");
-        } catch(Exception e){
-            e.printStackTrace();
+            System.out.println("retrieved?");
         } finally {
             factory.close();
         }
 
+        System.out.printf(theStudent.toString());
+
     }
+
+
 }
