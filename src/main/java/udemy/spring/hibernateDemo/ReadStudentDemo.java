@@ -14,7 +14,7 @@ public class ReadStudentDemo
     public static void main( String[] args )
     {
         System.out.println( "Hello World! Reading" );
-        int studentId=5;
+        int studentId=7;
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory=new Configuration()

@@ -4,6 +4,8 @@ import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import udemy.spring.hibernateDemo.entity.Student;
 
+import java.util.Date;
+
 /**
  * Hello world!
  *
@@ -13,9 +15,6 @@ public class App
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
-
-        // Create a student object
-        Student theStudent=new Student("zachary","zed","z@zee.com");
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory=new Configuration()
@@ -28,10 +27,18 @@ public class App
 
         // Try and interact with the table
         try {
+            // the student to create/write
+            String sDoB = "11/11/2011";
+            Date dDoB = DateUtils.parseDate(sDoB);
+            Student theStudent = new Student("quick", "quiz", dDoB, "q@kew.com");
+
             session.beginTransaction();
             session.save(theStudent);
             session.getTransaction().commit();
+
             System.out.println("saved?");
+        } catch(Exception e){
+            e.printStackTrace();
         } finally {
             factory.close();
         }

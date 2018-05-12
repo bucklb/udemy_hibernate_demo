@@ -5,6 +5,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import udemy.spring.hibernateDemo.entity.Student;
 
+import java.util.Date;
+
 public class UpdateStudentDemo {
     public static void main( String[] args )
     {
@@ -12,7 +14,7 @@ public class UpdateStudentDemo {
         int studentId=5;
 
         // Create a student object
-        Student theStudent=new Student("zachary","zed","z@zee.com");
+        Student theStudent=new Student("zachary","zed",new Date("12/12/2012"),"z@zee.com");
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory=new Configuration()
