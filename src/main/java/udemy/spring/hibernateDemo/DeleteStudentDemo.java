@@ -1,27 +1,21 @@
 package udemy.spring.hibernateDemo;
 
-import org.hibernate.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import udemy.spring.hibernateDemo.entity.Student;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
+public class DeleteStudentDemo {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
-
-        // Create a student object
-        Student theStudent=new Student("zachary","zed","z@zee.com");
+        System.out.println( "Update a student!" );
+        int studentId=6;
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory=new Configuration()
-                                .configure("hibernate.cfg.xml")
-                                .addAnnotatedClass(Student.class)
-                                .buildSessionFactory();
+                .configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Student.class)
+                .buildSessionFactory();
 
         // Get a session from factory
         Session session=factory.openSession();
@@ -29,12 +23,11 @@ public class App
         // Try and interact with the table
         try {
             session.beginTransaction();
-            session.save(theStudent);
+            session.createQuery("delete Student where id="+studentId).executeUpdate();
             session.getTransaction().commit();
-            System.out.println("saved?");
+            System.out.println("deleted? " );
         } finally {
             factory.close();
         }
 
-    }
-}
+    }}

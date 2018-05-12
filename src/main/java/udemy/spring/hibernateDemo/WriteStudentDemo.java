@@ -1,6 +1,7 @@
 package udemy.spring.hibernateDemo;
 
-import org.hibernate.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import udemy.spring.hibernateDemo.entity.Student;
 
@@ -8,7 +9,7 @@ import udemy.spring.hibernateDemo.entity.Student;
  * Hello world!
  *
  */
-public class App 
+public class WriteStudentDemo
 {
     public static void main( String[] args )
     {
