@@ -17,7 +17,7 @@ public class CreateInstructorDemo {
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory = new Configuration()
-                .configure("hibernate.cfg.xml")
+                .configure("hb_01_one_to_one_uni.cfg.xml")
                 .addAnnotatedClass(Instructor.class)        // need factory to know about BOTH classes
                 .addAnnotatedClass(InstructorDetail.class)
                 .buildSessionFactory();
@@ -33,7 +33,7 @@ public class CreateInstructorDemo {
             InstructorDetail theDetail=new InstructorDetail("x@y.com","bestiality" );
             theInstructor.setInstructorDetail(theDetail);
             */
-            Instructor theInstructor = new Instructor("release", "roderick", "r@dgey.com");
+            Instructor theInstructor = new Instructor("Samson", "saducee strangler", "r@dgey.com");
             InstructorDetail theDetail=new InstructorDetail("radgey@youtube.com","speech defects" );
             theInstructor.setInstructorDetail(theDetail);
 

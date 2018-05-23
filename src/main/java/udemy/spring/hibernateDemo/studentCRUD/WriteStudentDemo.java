@@ -20,7 +20,7 @@ public class WriteStudentDemo
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory=new Configuration()
-                                .configure("hibernate.cfg.xml")
+                                .configure("hb_student_tracker.cfg.xml")
                                 .addAnnotatedClass(Student.class)
                                 .buildSessionFactory();
 

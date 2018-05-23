@@ -13,7 +13,7 @@ public class DeleteInstructorDetailDemo {
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory = new Configuration()
-                .configure("hibernate.cfg.xml")
+                .configure("hb_01_one_to_one_uni.cfg.xml")
                 .addAnnotatedClass(Instructor.class)
                 .addAnnotatedClass(InstructorDetail.class)
                 .buildSessionFactory();
