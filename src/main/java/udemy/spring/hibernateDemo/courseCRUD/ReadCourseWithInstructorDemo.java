@@ -1,41 +1,48 @@
-package udemy.spring.hibernateDemo.instructorCRUD;
+package udemy.spring.hibernateDemo.courseCRUD;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import udemy.spring.hibernateDemo.entity.Course;
 import udemy.spring.hibernateDemo.entity.Instructor;
 import udemy.spring.hibernateDemo.entity.InstructorDetail;
-import udemy.spring.hibernateDemo.entity.Student;
 
-public class ReadInstructorDemo {
-    public static void main( String[] args ) {
-        System.out.println("Hello World! Reading instructor(s)");
-        int instructorId = 2;
+//
+// Not part of the Udemy stuff, but want to see if getting course gives easy access to its instructor
+//
+public class ReadCourseWithInstructorDemo {
+    public static void main(String[] args) {
+
+        int courseId=11;
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory = new Configuration()
                 .configure("hb_01_one_to_one_uni.cfg.xml")
-                .addAnnotatedClass(Instructor.class)
+                .addAnnotatedClass(Instructor.class)        // need factory to know about BOTH classes
                 .addAnnotatedClass(InstructorDetail.class)
+                .addAnnotatedClass(Course.class)
                 .buildSessionFactory();
-
-        // Student object
-        Instructor theInstructor;
 
         // Get a session from factory
         Session session = factory.openSession();
 
         // Try and interact with the table.  Get the student by id
         try {
+
+            // Retrieve the course (by id) and any corresponding instructor
             session.beginTransaction();
-            theInstructor = session.get(Instructor.class, instructorId);
+            Course theCourse = session.get(Course.class, courseId);
             session.getTransaction().commit();
-            System.out.println("Instructor : " + theInstructor.toString());
-            System.out.println("retrieved?");
+
+            // dump the course (and its instructor) to screen
+            System.out.println("Course : " + theCourse.toString());
+            System.out.println(theCourse.getInstructor().toString());
+
         } finally {
             factory.close();
         }
 
-        System.out.printf(theInstructor.toString());
+
+
     }
 }

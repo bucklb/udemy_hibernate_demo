@@ -1,6 +1,8 @@
 package udemy.spring.hibernateDemo.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="instructor")
@@ -14,15 +16,11 @@ public class Instructor {
     public Instructor(){
     }
 
-
-
-
     // Relationship with detail table
     @OneToOne(cascade = CascadeType.ALL)
 
     @JoinColumn(name="instructor_detail_id")
     private InstructorDetail instructorDetail;
-
 
     @Id
     @Column(name="id")
@@ -36,6 +34,11 @@ public class Instructor {
 
     @Column(name="email")
     private String email;
+
+    @OneToMany(mappedBy = "instructor",
+               cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
+    private List<Course> courses;
+
 
     @Override
     public String toString() {
@@ -78,4 +81,21 @@ public class Instructor {
 
     public InstructorDetail getInstructorDetail() {        return instructorDetail;    }
     public void             setInstructorDetail(InstructorDetail instructorDetail) {        this.instructorDetail = instructorDetail;    }
+
+    public List<Course> getCourses() {        return courses;    }
+    public void setCourses(List<Course> courses) {        this.courses = courses;    }
+
+    // Convenience Method(s).
+    //  Make it easy to add course at a time (rather than full set at once)
+    //  Make course know about its instructor too
+    public void add(Course aCourse){
+        if(courses==null){
+            courses=new ArrayList<>();
+        }
+        courses.add(aCourse);
+
+        // Let the course know this instructor is relevant to it
+        aCourse.setInstructor(this);
+    }
+
 }
