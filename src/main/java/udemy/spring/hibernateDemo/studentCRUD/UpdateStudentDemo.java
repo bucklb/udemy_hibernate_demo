@@ -14,11 +14,11 @@ public class UpdateStudentDemo {
         int studentId=5;
 
         // Create a student object
-        Student theStudent=new Student("zachary","zed",new Date("12/12/2012"),"z@zee.com");
+        Student theStudent=new Student("zachary","zed",/*new Date("12/12/2012"),*/"z@zee.com");
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory=new Configuration()
-                .configure("hb_student_tracker.cfg.xml")
+                .configure("hb_01_one_to_one_uni.cfg.xml")
                 .addAnnotatedClass(Student.class)
                 .buildSessionFactory();
 
@@ -40,6 +40,7 @@ public class UpdateStudentDemo {
             session.getTransaction().commit();
             System.out.println("updated? " );
         } finally {
+            session.close();
             factory.close();
         }
 

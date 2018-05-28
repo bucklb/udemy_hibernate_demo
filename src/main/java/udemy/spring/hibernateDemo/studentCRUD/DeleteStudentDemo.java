@@ -9,11 +9,11 @@ public class DeleteStudentDemo {
     public static void main( String[] args )
     {
         System.out.println( "Update a student!" );
-        int studentId=6;
+        int studentId=1;
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory=new Configuration()
-                .configure("hb_student_tracker.cfg.xml")
+                .configure("hb_01_one_to_one_uni.cfg.xml")
                 .addAnnotatedClass(Student.class)
                 .buildSessionFactory();
 
@@ -27,6 +27,7 @@ public class DeleteStudentDemo {
             session.getTransaction().commit();
             System.out.println("deleted? " );
         } finally {
+            session.close();
             factory.close();
         }
 

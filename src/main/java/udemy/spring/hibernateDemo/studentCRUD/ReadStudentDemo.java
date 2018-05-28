@@ -3,7 +3,7 @@ package udemy.spring.hibernateDemo.studentCRUD;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import udemy.spring.hibernateDemo.entity.Student;
+import udemy.spring.hibernateDemo.entity.*;
 
 /**
  * Hello world!
@@ -14,13 +14,17 @@ public class ReadStudentDemo
     public static void main( String[] args )
     {
         System.out.println( "Hello World! Reading" );
-        int studentId=5;
+        int studentId=1;
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory=new Configuration()
-                                .configure("hb_student_tracker.cfg.xml")
-                                .addAnnotatedClass(Student.class)
-                                .buildSessionFactory();
+                .configure("hb_01_one_to_one_uni.cfg.xml")
+                .addAnnotatedClass(Instructor.class)        // need factory to know about BOTH classes
+                .addAnnotatedClass(InstructorDetail.class)
+                .addAnnotatedClass(Course.class)
+                .addAnnotatedClass(Review.class)            // added review, so need to link it in. 28/5/18
+                .addAnnotatedClass(Student.class)            // added review, so need to link it in. 28/5/18
+                .buildSessionFactory();
 
         // Student object
         Student theStudent;
@@ -38,6 +42,7 @@ public class ReadStudentDemo
             factory.close();
         }
 
+        session.close();
         System.out.printf(theStudent.toString());
 
     }

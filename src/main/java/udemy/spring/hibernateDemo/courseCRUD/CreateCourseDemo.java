@@ -3,9 +3,7 @@ package udemy.spring.hibernateDemo.courseCRUD;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import udemy.spring.hibernateDemo.entity.Course;
-import udemy.spring.hibernateDemo.entity.Instructor;
-import udemy.spring.hibernateDemo.entity.InstructorDetail;
+import udemy.spring.hibernateDemo.entity.*;
 
 public class CreateCourseDemo{
     public static void main(String[] args) {
@@ -19,6 +17,8 @@ public class CreateCourseDemo{
                 .addAnnotatedClass(Instructor.class)        // need factory to know about BOTH classes
                 .addAnnotatedClass(InstructorDetail.class)
                 .addAnnotatedClass(Course.class)
+                .addAnnotatedClass(Review.class)
+                .addAnnotatedClass(Student.class)
                 .buildSessionFactory();
 
         // Get a session from factory
