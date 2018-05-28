@@ -6,6 +6,7 @@ import org.hibernate.cfg.Configuration;
 import udemy.spring.hibernateDemo.entity.Course;
 import udemy.spring.hibernateDemo.entity.Instructor;
 import udemy.spring.hibernateDemo.entity.InstructorDetail;
+import udemy.spring.hibernateDemo.entity.Review;
 
 //
 // Not part of the Udemy stuff, but want to see if getting course gives easy access to its instructor
@@ -13,7 +14,7 @@ import udemy.spring.hibernateDemo.entity.InstructorDetail;
 public class ReadCourseWithInstructorDemo {
     public static void main(String[] args) {
 
-        int courseId=11;
+        int courseId=16;
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory = new Configuration()
@@ -21,6 +22,7 @@ public class ReadCourseWithInstructorDemo {
                 .addAnnotatedClass(Instructor.class)        // need factory to know about BOTH classes
                 .addAnnotatedClass(InstructorDetail.class)
                 .addAnnotatedClass(Course.class)
+                .addAnnotatedClass(Review.class)            // added review, so need to link it in. 28/5/18
                 .buildSessionFactory();
 
         // Get a session from factory
@@ -36,9 +38,12 @@ public class ReadCourseWithInstructorDemo {
 
             // dump the course (and its instructor) to screen
             System.out.println("Course : " + theCourse.toString());
-            System.out.println(theCourse.getInstructor().toString());
+            if(theCourse.getInstructor()!=null){
+                System.out.println(theCourse.getInstructor().toString());}
+            System.out.println(theCourse.getReviews().toString());
 
         } finally {
+            session.close();
             factory.close();
         }
 

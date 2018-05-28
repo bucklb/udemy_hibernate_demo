@@ -47,6 +47,7 @@ public class InstructorDetail {
     // Explore bi-directional (with cascade)
     @OneToOne(mappedBy = "instructorDetail",cascade = CascadeType.ALL)
     private Instructor    instructor;
+
     public  Instructor getInstructor() {                    return instructor;    }
     public void        setInstructor(Instructor instructor) { this.instructor = instructor;    }
 }

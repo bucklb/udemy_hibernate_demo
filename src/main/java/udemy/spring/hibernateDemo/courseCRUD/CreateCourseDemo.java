@@ -10,7 +10,7 @@ import udemy.spring.hibernateDemo.entity.InstructorDetail;
 public class CreateCourseDemo{
     public static void main(String[] args) {
 
-        int instructorId=1;
+        int instructorId=2;
         Instructor theInstructor=null;
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
@@ -34,23 +34,27 @@ public class CreateCourseDemo{
             // Create some courses for the instructor & add them to instructor
             // (so the course "know" about their instructor prior to the save we'll do)
             // - might perhaps do via an array. So create array of courses, add each to constructor and save each
-            Course c1=new Course("qik");
-            Course c2=new Course("qik 2");
+//            theInstructor=new Instructor("fred","flintstone","f@f.f");
+            Course c1=new Course("B QIK");
+            Course c2=new Course("B QIK 2");
             theInstructor.add(c1);
             theInstructor.add(c2);
 
             // the writing
             session.beginTransaction();
 
-            // save the courses (including their knowledge of the instructor)
+            // save the courses (including their knowledge of the instructor).  Can't cascade the save from the instructor ??
+            // NOT even if we create a new instructor :(
             session.save(c1);
             session.save(c2);
+//            session.save(theInstructor);
 
             // make it so!
             session.getTransaction().commit();
 
 
         } finally {
+            session.close();
             factory.close();
         }
 

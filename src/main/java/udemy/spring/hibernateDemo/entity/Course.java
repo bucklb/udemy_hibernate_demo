@@ -1,6 +1,8 @@
 package udemy.spring.hibernateDemo.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // Added new table so start using it
 @Entity
@@ -16,9 +18,18 @@ public class Course {
     private String title;
 
     // Don't allow REMOVE, so have to spell out all the others .....
+    // Use the "local" instructor_id to join with instructors
+    // (assume that hibernate gets the table name from the Class we use, so goes to Instructor class to get its details, like table name)
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
     @JoinColumn(name="instructor_id")
     private Instructor instructor;
+
+    // Use course_id (in Review table) to do the join
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name="course_id")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Review> reviews;
+
 
     public int getId() {        return id;    }
     public void setId(int id) {        this.id = id;    }
@@ -29,12 +40,18 @@ public class Course {
     public Instructor getInstructor() {        return instructor;    }
     public void setInstructor(Instructor instructor) {        this.instructor = instructor;    }
 
-    public Course(String title) {
-        this.title = title;
+    // Constructors
+    public Course(String title) {        this.title = title;    }
+    public Course() {    }
+
+    public void setReviews(List<Review> reviews) {        this.reviews = reviews;    }
+    public List<Review> getReviews() {        return reviews;    }
+
+    public void add(Review review){
+        if(reviews == null) { reviews=new ArrayList<>();}
+        reviews.add(review);
     }
 
-    public Course() {
-    }
 
     @Override
     public String toString() {

@@ -1,4 +1,4 @@
-package udemy.spring.hibernateDemo.courseCRUD;
+package udemy.spring.hibernateDemo.reviewCRUD;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,11 +8,12 @@ import udemy.spring.hibernateDemo.entity.Instructor;
 import udemy.spring.hibernateDemo.entity.InstructorDetail;
 import udemy.spring.hibernateDemo.entity.Review;
 
-public class ReadInstructorWithCoursesDemo {
-    public static void main(String[] args) {
 
-        int instructorId=1;
-        Instructor theInstructor=null;
+//
+// Look at creating a course, complete with reviews and saving the lot
+//
+public class CreateCourseAndReviewDemo {
+    public static void main(String[] args) {
 
         // Generate THE factory. ?? How do we share it (and/or its sessions) ??
         SessionFactory factory = new Configuration()
@@ -26,21 +27,21 @@ public class ReadInstructorWithCoursesDemo {
         // Get a session from factory
         Session session = factory.openSession();
 
+        // If we set up course->reviews as
+        Course course=new Course("created with mappedBy 2");
+        course.add(new Review("review 1"));
+        course.add(new Review("review 2"));
+        course.add(new Review("review 3"));
+
+
         // Try and interact with the table.  Get the student by id
         try {
 
-            // Retrieve the instructor, replete with courses
+            // Save the course (with reviews, we hope)
             session.beginTransaction();
-            theInstructor = session.get(Instructor.class, instructorId);
+            session.save(course);
             session.getTransaction().commit();
 
-            System.out.println("Instructor : " + theInstructor.toString());
-            for(Course c:theInstructor.getCourses()){
-                System.out.println(c.toString());
-                System.out.println(c.getReviews().toString());
-            }
-
-            System.out.println("retrieved?");
         } finally {
             session.close();
             factory.close();
